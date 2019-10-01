@@ -1,0 +1,91 @@
+import TYPES from '../static/Types';
+import _ from 'lodash';
+
+const initialState = {
+  campaigns: null,
+  ruleSets: null,
+  rulesState: {},
+  activeCampaign: null,
+  loadedCampaign: []
+};
+const campaignReducer = (state = initialState, action) => {
+
+  switch (action.type) {
+
+    case TYPES.LOAD_CAMP:
+      return {
+        ...state,
+        campaigns: action.payload.campaigns.campaigns,
+        ruleSets: action.payload.rulesets,
+        rulesState: action.payload.rulesState
+      };
+
+    case TYPES.COMPLETE_EVENT:
+
+      let isTrue = (!_.isUndefined(action.payload.b)) ? action.payload.b : true;
+
+      if (action.payload.checkAll === true) {
+
+        _.map(state.ruleSets[action.payload.campaignid]['all'], function (v, k) {
+          if (_.size(v) === 1)
+            _.map(v['all'][0].any, val => isTrue = (val.fact == action.payload.ruleid) ? true : false);
+          else {
+            let oldState = { ...state.rulesState[action.payload.campaignid]
+            };
+
+            delete oldState[action.payload.ruleid];
+            let stateLength = _.size(oldState);
+            let counter = _.reduce(oldState, (i, v) => {
+
+              if (v === true)
+                i++;
+
+              return i;
+            }, 0);
+
+            isTrue = (counter === stateLength) ? true : false;
+          }
+        });
+      }
+
+      return {
+        ...state,
+        rulesState: {
+          ...state.rulesState,
+          [action.payload.campaignid]: {
+            ...state.rulesState[action.payload.campaignid],
+            [action.payload.ruleid]: isTrue
+          }
+        }
+      }
+    case TYPES.ADD_RULESET:
+      return {
+        ...state,
+        rulesState: {
+          ...state.rulesState,
+          [action.payload.campaignid]: action.payload.ruleset
+        }
+      }
+    case TYPES.TOGGLE:
+      return {
+        ...state,
+        activeCampaign: action.payload
+      }
+    case TYPES.EVENT_COMPLETED:
+
+      const loaded = [...state.loadedCampaign];
+
+      if (loaded.indexOf(action.payload) === -1)
+        loaded.push(action.payload);
+
+      return {
+        ...state,
+        loadedCampaign: [...loaded]
+      }
+
+    default:
+      return state;
+  }
+}
+
+export default campaignReducer;

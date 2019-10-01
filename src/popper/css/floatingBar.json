@@ -1,0 +1,52 @@
+{
+    "slideInWrapper": {
+        "position": "fixed",
+        "zIndex": "666666666",
+        "left": "0px",
+        "zoom": "1",
+        "width": "100%",
+        "margin": "0px",
+        "padding": "0px",
+        "overflow": "visible",
+        "border": "0px",
+        "borderRadius": "0px",
+        "float": "none",
+        "letterSpacing": "normal",
+        "outline": "none",
+        "textDecoration": "none",
+        "textIndent": "0px",
+        "textShadow": "none",
+        "textTransform": "none",
+        "visibility": "visible",
+        "lineHeight": "1",
+        "fontFamily": "helvetica, arial, san-serif",
+        "boxShadow": "none",
+        "WebkitFontSmoothing": "antialiased",
+        "WebkitAppearance": "none",
+        "minHeight": "50px",
+        "display": "block",
+        "transition": "bottom 0.3s ease 0s",
+        "bottom": "-900px",
+        "z-index": "1000"
+    },
+    "show": {
+        "bottom": 0
+    },
+    "slideIn ": {
+        "animation": "slide-in 0.5s forwards",
+        "-webkit-animation": "slide-in 0.5s forwards"
+    },
+    "crClose": {
+        "float": "right",
+        "width": "1.5rem",
+        "position": "absolute",
+        "lineHeight": "1.5rem",
+        "textAlign": "center",
+        "top": "33px",
+        "right": "25px",
+        "cursor": "pointer",
+        "borderRadius": "0.25rem",
+        "backgroundColor": "lightgray",
+        "zIndex": "111"
+      }
+}

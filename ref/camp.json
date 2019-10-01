@@ -1,0 +1,64 @@
+[
+    {
+        "name": "My First Campaign",
+        "rules": {
+            "a": [
+                {
+                    "rule": "time on page",
+                    "active": "1",
+                    "condition": {
+                        "type": "is-no-more-than",
+                        "value": "5"
+                    }
+                },
+                {
+                    "rule": "time on page",
+                    "active": "1",
+                    "condition": {
+                        "type": "is-at-least",
+                        "value": "5"
+                    }
+                }
+            ],
+            "o": [
+                {
+                    "rule": "time on page",
+                    "active": "1",
+                    "condition": {
+                        "type": "is-no-more-than",
+                        "value": "5"
+                    }
+                }
+            ]
+        },
+        "id": 1,
+        "html": "<h1 style=\"color: #5e9ca0;\">You can edit <span style=\"color: #2b2301;\">this demo<\/span> text!&nbsp;<\/h1>\n                <h2 style=\"color: #2e6c80;\">Some useful features:<\/h2>\n                <ol style=\"list-style: none; font-size: 14px; line-height: 32px; font-weight: bold;\">\n                <li style=\"clear: both;\"><img style=\"float: left;\" src=\"https:\/\/html-online.com\/img\/01-interactive-connection.png\" alt=\"interactive connection\" width=\"45\" \/> Interactive source editor<\/li>\n                <li style=\"clear: both;\"><img style=\"float: left;\" src=\"https:\/\/html-online.com\/img\/02-html-clean.png\" alt=\"html cleaner\" width=\"45\" \/> HTML Cleaning<\/li>\n                <li style=\"clear: both;\"><img style=\"float: left;\" src=\"https:\/\/html-online.com\/img\/03-docs-to-html.png\" alt=\"Word to html\" width=\"45\" \/> Word to HTML conversion<\/li>\n                <li style=\"clear: both;\"><img style=\"float: left;\" src=\"https:\/\/html-online.com\/img\/04-replace.png\" alt=\"replace text\" width=\"45\" \/> Find and Replace<\/li>\n                <li style=\"clear: both;\"><img style=\"float: left;\" src=\"https:\/\/html-online.com\/img\/05-gibberish.png\" alt=\"gibberish\" width=\"45\" \/> Lorem-Ipsum generator<\/li>\n                <li style=\"clear: both;\"><img style=\"float: left;\" src=\"https:\/\/html-online.com\/img\/6-table-div-html.png\" alt=\"html table div\" width=\"45\" \/> Table to DIV conversion<\/li>\n                <\/ol>\n                <p>&nbsp;<\/p>"
+    },
+    {
+        "name": "My Second Campaign",
+        "rules": {
+            "a": [
+                {
+                    "rule": "time on page",
+                    "active": "1",
+                    "condition": {
+                        "type": "is-no-more-than",
+                        "value": "5"
+                    }
+                }
+            ],
+            "o": [
+                {
+                    "rule": "time on page",
+                    "active": "1",
+                    "condition": {
+                        "type": "is-no-more-than",
+                        "value": "5"
+                    }
+                }
+            ]
+        },
+        "id": 1,
+        "html": "<h1 style=\"color: #5e9ca0;\">You can edit <span style=\"color: #2b2301;\">this demo<\/span> text!&nbsp;<\/h1>\n                <h2 style=\"color: #2e6c80;\">Some useful features:<\/h2>\n                <ol style=\"list-style: none; font-size: 14px; line-height: 32px; font-weight: bold;\">\n                <li style=\"clear: both;\"><img style=\"float: left;\" src=\"https:\/\/html-online.com\/img\/01-interactive-connection.png\" alt=\"interactive connection\" width=\"45\" \/> Interactive source editor<\/li>\n                <li style=\"clear: both;\"><img style=\"float: left;\" src=\"https:\/\/html-online.com\/img\/02-html-clean.png\" alt=\"html cleaner\" width=\"45\" \/> HTML Cleaning<\/li>\n                <li style=\"clear: both;\"><img style=\"float: left;\" src=\"https:\/\/html-online.com\/img\/03-docs-to-html.png\" alt=\"Word to html\" width=\"45\" \/> Word to HTML conversion<\/li>\n                <li style=\"clear: both;\"><img style=\"float: left;\" src=\"https:\/\/html-online.com\/img\/04-replace.png\" alt=\"replace text\" width=\"45\" \/> Find and Replace<\/li>\n                <li style=\"clear: both;\"><img style=\"float: left;\" src=\"https:\/\/html-online.com\/img\/05-gibberish.png\" alt=\"gibberish\" width=\"45\" \/> Lorem-Ipsum generator<\/li>\n                <li style=\"clear: both;\"><img style=\"float: left;\" src=\"https:\/\/html-online.com\/img\/6-table-div-html.png\" alt=\"html table div\" width=\"45\" \/> Table to DIV conversion<\/li>\n                <\/ol>\n                <p>&nbsp;<\/p>"
+    }
+]
