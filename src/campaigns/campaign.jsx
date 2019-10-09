@@ -32,17 +32,31 @@ class Campaign extends Component {
     }
 
     componentDidMount(){   
+        let campaign = this.props.camp
+        sessionStorage.setItem('up-state', JSON.stringify({...campaign,html:""}))
+        sessionStorage.setItem('up-subscribe-campaign', campaign.id)
+
+
+        // {
+        //     "email": "danyrupes2@gmail.com", 
+        //     "campaign":"{\"site_id\":\"6a2ef32b-ef4c-4547-a650-3463f82914cd\",\"id\":\"5d9b6505a43d421124fefc55\" }",
        
-        sessionStorage.setItem('up-state', JSON.stringify(this.props.camp))
-        sessionStorage.setItem('up-subscribe-campaign', this.props.camp.id)
+        //     "connection_index":"0",
+       
+        //     "site_id": "6a2ef32b-ef4c-4547-a650-3463f82914cd",
+        //     "subscribe_to":"nonprofit"
+        // }
+
+
+
         forEach(document.getElementById(this.props.camp.id).querySelectorAll("a"), a => {
             a.style.cursor = 'pointer';
             a.addEventListener('click', () => {
                 let userinfo = utils.uuid();
-                console.log("Clicked")
+                // console.log("Clicked")
                 this.props.sendAnalytics('click', {
                     last_viewed: new Date(),
-                    id: this.props.camp.key, 
+                    id: campaign.id, 
                     email: userinfo.email,
                     uid: userinfo.uid,
                     clicked:true

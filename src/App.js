@@ -4,7 +4,8 @@ import map from 'lodash/map';
 import size from 'lodash/size';
 import isArray from 'lodash/isArray';
 import isUndefined from 'lodash/isUndefined';
-
+import 'bootstrap/dist/css/bootstrap.min.css'
+// import 'bootstrap/dist/js/bootstrap.min.js'
 import "./App.css";
  
 import { load_campaign } from './actions/campaign';
@@ -34,7 +35,8 @@ class App extends Component {
 
         const { app, campaigns } = this.state;  
         if(app && (size(campaigns) === 0 || isUndefined(campaigns))){ 
-            this.props.load_campaign( "popup/campaign/list?app_id="+ app);
+            let site_url = window.location.origin
+            this.props.load_campaign(`popup/campaign/list?app_id=${app}&site_url=${site_url}`);
         }else if(isArray(campaigns)){
             this.props.load_campaign( `popup/campaign/view?campaign_id=${campaigns.join(',')}&app_id=${app}`);
         }

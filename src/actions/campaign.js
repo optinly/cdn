@@ -88,6 +88,7 @@ module.exports = {
                             rulesInfo[campaign.id] = data.info;
                         });
 
+                        // console.log(json)
                         dispatch({
                             type: TYPES.LOAD_CAMP,
                             payload: {
@@ -169,7 +170,7 @@ module.exports = {
     sendAnalytics(type, params={}) {
         return (dispatch) => {
             
-            console.log(params.id)
+            // console.log(params.id)
             if(!_get(window, 'uberpopups.app_id')) //!isInteger(params.id) || 
             return false; 
             
@@ -182,7 +183,7 @@ module.exports = {
                     if(response.data !== false){
                         try{
                             // JSON
-                            console.log(response.data)
+                            // console.log(response.data)
                         }catch(error){
                                 console.log(error)
                         }
