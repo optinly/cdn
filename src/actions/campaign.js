@@ -83,7 +83,6 @@ module.exports = {
                                 state: {},
                                 info: []
                             });
-
                             rulesState[campaign.id] = data.state;
                             rulesInfo[campaign.id] = data.info;
                         });
@@ -171,28 +170,20 @@ module.exports = {
         return (dispatch) => {
             
             // console.log(params.id)
-            if(!_get(window, 'uberpopups.app_id')) //!isInteger(params.id) || 
+            if(!_get(window, 'upopsObject.up_app_id')) //!isInteger(params.id) || 
             return false; 
             
+            let url = `popup/analytics/campaign/update?campaign_id=${params.id}&app_id=${_get(window, 'upopsObject.up_app_id')}`;
             
-            let url = `popup/analytics/campaign/update?campaign_id=${params.id}&app_id=${_get(window, 'uberpopups.app_id')}`;
-            
-            if(url)
+            if(url) {
                 axios.post(url, params)
                 .then((response) => {
-                    if(response.data !== false){
-                        try{
-                            // JSON
-                            // console.log(response.data)
-                        }catch(error){
-                                console.log(error)
-                        }
-                    }
-                        dispatch({
-                            type: TYPES.SENT_ANALYTICS,
-                            payload: {}
-                        })
-                }).catch(() => { });
+                            dispatch({
+                                type: TYPES.SENT_ANALYTICS,
+                                payload: {}
+                            })
+                    }).catch(() => { });
+            }
         }
     }
 }

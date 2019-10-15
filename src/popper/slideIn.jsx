@@ -43,11 +43,10 @@ class SlideIn extends Component {
 
     }
 
-    render() {
-       
+    render() {         
         const display = (this.state.open === true) ? { ...styles.slideInWrapper, ...styles.show } : { ...styles.slideInWrapper };
         return (
-            <div style={display} id={this.props.id}>
+            <div style={display} id={this.props.id} >
               <span style={styles.crClose} onClick={this.close.bind(this, 'hard')}>&times;</span>
                 {this.props.children}
             </div>

@@ -26,20 +26,18 @@ const campaignReducer = (state = initialState, action) => {
       };
 
     case TYPES.COMPLETE_EVENT:
-
       let isTrue = (!isUndefined(action.payload.b)) ? action.payload.b : true;
-
       if (action.payload.checkAll === true) { 
-
+        
         let groups = [];
         let completedGroups = [];
-
+        
         let groupid = find(state.rulesInfo[action.payload.campaignid], { id: action.payload.ruleid });
  
         if(!isUndefined(groupid)){ 
 
           map(state.rulesInfo[action.payload.campaignid], (v,k) => { 
-
+            
             let gid =groupid['groupid']; 
 
             if(v.groupid !== gid){
@@ -54,9 +52,14 @@ const campaignReducer = (state = initialState, action) => {
         }   
         
         isTrue = (size(uniq(groups)) === size(uniq(completedGroups))) ? true : false; 
-        
       }   
-      
+      let rulesState = {
+        ...state.rulesState,
+        [action.payload.campaignid]: {
+          ...state.rulesState[action.payload.campaignid],
+          [action.payload.ruleid]: isTrue
+        }
+      }
       return {
         ...state,
         rulesState: {
@@ -78,7 +81,6 @@ const campaignReducer = (state = initialState, action) => {
     case TYPES.TOGGLE:
 
     const loaded = [...state.loadedCampaign];
-
     if (loaded.indexOf(action.payload) === -1)
       loaded.push(action.payload); 
       return {

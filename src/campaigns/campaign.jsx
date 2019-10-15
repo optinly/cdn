@@ -23,14 +23,17 @@ class Campaign extends Component {
         this.handleLoader = this.handleLoader.bind(this)
     }
 
+
+
     handleLoader() {
+
         const { camp: campaign } = this.props;  
-        return (<Popper type={campaign.type} id={campaign.id} >
-                    <div dangerouslySetInnerHTML={{ __html: this.props.camp.html }} ></div>
-                    <Rules rules={campaign.rules_g.rules} wrapperid={12} campaignid={campaign.id} />
+        return (<Popper type={campaign.type} id={campaign.id} campaign={campaign} >
+                  
+                    <Rules  campaign={campaign} rules={campaign.rules_g.rules} wrapperid={12} campaignid={campaign.id} />
                 </Popper>);
     }
-
+ 
     componentDidMount(){   
         let campaign = this.props.camp
         sessionStorage.setItem('up-state', JSON.stringify({...campaign,html:""}))
@@ -69,7 +72,6 @@ class Campaign extends Component {
         each(ruleset, (rules, campaignid) => { 
             
             if (includes(utils.getLoadedCampaigns(), campaignid) === false && includes(this.props.loadedcampaign, campaignid) === false) {
-
                 let engine = new Engine();  
                 engine.addRule({
                     conditions: { ...this.props.ruleSets[campaignid] },
@@ -80,16 +82,15 @@ class Campaign extends Component {
                         }
                     }
                 });
-                 
+                
                 engine
                     .run({ ...rules })
                     .then(events => {  
                         map(events, event => {  
                             if (event.params.message === "start") {    
                                 this.props.show(campaignid); 
-
                                 let userinfo = utils.uuid();
-
+                                
                                 this.props.sendAnalytics('impression', {
                                     last_viewed: new Date(),
                                     id: this.props.camp.key, 
@@ -109,17 +110,16 @@ class Campaign extends Component {
  
 
     componentWillUpdate(prevProps, prevState) {  
-        
         const { camp: campaign } = this.props;  
         if (!isEqual(prevProps.rulesState[campaign.id], this.props.rulesState[campaign.id]))
-            this.compileRuleSet.call(this, { ...prevProps.rulesState });
+            {   
+      
+                this.compileRuleSet.call(this, { ...prevProps.rulesState });
+            }
     }
 
     render() { 
-    //     <div
-    //     ref={helloElement => (this.helloElement = helloElement)} 
-    //     dangerouslySetInnerHTML={{__html: this.props.camp.html || <p>Hello</p>}} 
-    //   />
+        console.log("Root")
         return this.handleLoader.call(this);
     }
 }

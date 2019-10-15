@@ -34,7 +34,6 @@ class Url extends UrlCore {
     exactlyMatches(value) {
 
         var regExp = new RegExp('^' + value + '$');
-
         return regExp.test(this.location.href.split('?')[0]);
     }
 

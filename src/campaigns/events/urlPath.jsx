@@ -31,7 +31,6 @@ class UrlPath extends Component{
     }
     
     triggerFunc(name, value){   
-        
         if(typeof url[public_methods[name]] === 'function'){    
             if(url[public_methods[name]](value)){      
                 this.props.toCompleteEvent(this.props.campaignid, this.props.rule.id);

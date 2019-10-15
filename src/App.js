@@ -22,7 +22,7 @@ class App extends Component {
 
         this.state = { app, campaigns }
     }
-
+ 
     render() {
         const { campaigns } = this.props.campaign; 
         

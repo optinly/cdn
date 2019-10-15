@@ -44,7 +44,7 @@ class Modal extends Component {
         const display = (this.state.open === true) ? { ...styles.crModal, ...styles.crShowModal } : { ...styles.crModal };
 
         return (
-            <div style={display} id={this.props.id}>
+            <div style={display} id={this.props.id} className="mySet">
                 <div style={styles.crModalContent}>
                     <span style={styles.crClose} onClick={this.close.bind(this, 'hard')}>&times;</span>
                     {this.props.children}
