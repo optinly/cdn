@@ -17,8 +17,8 @@ class App extends Component {
 
         super(props);    
         
-        var app = window.uberpopups.app_id;
-        var campaigns = window.uberpopups.campaigns;
+        var app = window.upopsObject.up_app_id;
+        var campaigns = window.upopsObject.campaigns;
 
         this.state = { app, campaigns }
     }
