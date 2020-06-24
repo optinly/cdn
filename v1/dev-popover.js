@@ -51,10 +51,11 @@ class WGS {
     }
 
     initAddToCart() {
+        console.log('initAddToCart',)
 
         $(document).on('click', this.add_to_cart_selectors , function (e) {
             e.preventDefault()
-            console.log('initAddToCart',)
+            console.log('Add' )
 
             $(this).submit()
         })
@@ -134,7 +135,7 @@ class CustomerSession {
 function initWGSTracking() {
 
     $ = jQuery
-
+    console.log("init tarck", $)
     let wgs = new WGS({})
 
 }
