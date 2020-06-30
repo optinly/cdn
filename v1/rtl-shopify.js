@@ -1579,7 +1579,7 @@ function initRtlShopify() {
             generateURL: function (t, e) {
                 var o;
                 let { app_url, shop_uuid } = this.params
-                o = (app_url || "http://localhost:8080") + "/shopify/" + t;
+                o = (app_url || "https://apibeta.optinly.com/v1") + "/shopify/" + t;
                 return null == e ? o : o + "/" + e;
             }
         }
