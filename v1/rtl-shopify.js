@@ -1,5 +1,5 @@
+console.log("load 1")
 
-console.log("ch b1")
 function WebUiPopover(window, document, undefined) {
 
     !(function (t) {
@@ -1272,47 +1272,6 @@ function UUID() {
     !function (t, e) { "object" == typeof exports && "undefined" != typeof module ? module.exports = e() : "function" == typeof define && define.amd ? define(e) : (t = t || self).rtl_uuid = e() }(this, (function () { "use strict"; var t = "undefined" != typeof crypto && crypto.getRandomValues && crypto.getRandomValues.bind(crypto) || "undefined" != typeof msCrypto && "function" == typeof msCrypto.getRandomValues && msCrypto.getRandomValues.bind(msCrypto), e = new Uint8Array(16); function n() { if (!t) throw new Error("crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported"); return t(e) } for (var o = [], r = 0; r < 256; ++r)o.push((r + 256).toString(16).substr(1)); return function (t, e, r) { "string" == typeof t && (e = "binary" === t ? new Uint8Array(16) : null, t = null); var u = (t = t || {}).random || (t.rng || n)(); if (u[6] = 15 & u[6] | 64, u[8] = 63 & u[8] | 128, e) { for (var i = r || 0, d = 0; d < 16; ++d)e[i + d] = u[d]; return e } return function (t, e) { var n = e || 0, r = o; return (r[t[n + 0]] + r[t[n + 1]] + r[t[n + 2]] + r[t[n + 3]] + "-" + r[t[n + 4]] + r[t[n + 5]] + "-" + r[t[n + 6]] + r[t[n + 7]] + "-" + r[t[n + 8]] + r[t[n + 9]] + "-" + r[t[n + 10]] + r[t[n + 11]] + r[t[n + 12]] + r[t[n + 13]] + r[t[n + 14]] + r[t[n + 15]]).toLowerCase() }(u) } }));
 }
 
-
-document.addEventListener("DOMContentLoaded", function () {
-    if (typeof jQuery == "undefined") {
-        // alert("jquery undefined");
-
-        function getScript(url, success) {
-            let script = document.createElement('script');
-            script.src = url;
-            let head = document.getElementsByTagName('head')[0],
-                done = false;
-            // Attach handlers for all browsers
-            script.onload = script.onreadystatechange = function () {
-                if (!done && (!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete')) {
-                    done = true;
-                    // callback function provided as param
-                    success();
-                    script.onload = script.onreadystatechange = null;
-                    head.removeChild(script);
-                }
-            };
-            head.appendChild(script);
-        }
-
-        let jquery_url = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js";
-        if (retainful_cart_data.jquery_url !== undefined) {
-            jquery_url = retainful_cart_data.jquery_url;
-        }
-        getScript(jquery_url, function () {
-            console.log(jQuery, initRtlShopify)
-            if (typeof jQuery == "undefined") {
-                console.log("retainful unable to include jQuery");
-            } else {
-                jQuery.noConflict();
-                initRtlShopify && initRtlShopify()
-            }
-        });
-    } else {
-        initRtlShopify && initRtlShopify()
-    }
-});
-
 function initRtlShopify() {
 
 
@@ -1569,7 +1528,7 @@ function initRtlShopify() {
             this.add_to_cart_selectors = '#AddToCart, #AddToCart-product-template, #AddToCart--product-template, .AddToCartText, .add_to_cart, .add-to-cart, #add-to-cart, form[action^="/cart/add"] button[type="submit"]'
             this.params.capture_email_on_add_to_cart && this.initAddToCart()
             this.cart_data = null
-            console.log("ch 2")
+
             Retainful.API.params = params
             Retainful.helpers = new Helpers(params)
             Retainful.CustomerSession = new CustomerSession(params)
@@ -1780,10 +1739,61 @@ function initRtlShopify() {
 
 
     /** Initializing utils */
-    console.log("ch 01")
     WebUiPopover(window, document)
-    console.log("ch aa1")
     UUID()
-    console.log("ch a2")
+
     let rtl = new Retainful(rtlStorefrontParams) //customization: null customization is. 
+}
+
+
+
+
+function loadRTL() {
+    console.log("load RTL")
+    if (typeof jQuery == "undefined") {
+        // alert("jquery undefined");
+
+        function getScript(url, success) {
+            let script = document.createElement('script');
+            script.src = url;
+            let head = document.getElementsByTagName('head')[0],
+                done = false;
+            // Attach handlers for all browsers
+            script.onload = script.onreadystatechange = function () {
+                if (!done && (!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete')) {
+                    done = true;
+                    // callback function provided as param
+                    success();
+                    script.onload = script.onreadystatechange = null;
+                    head.removeChild(script);
+                }
+            };
+            head.appendChild(script);
+        }
+
+        let jquery_url = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js";
+        if (retainful_cart_data.jquery_url !== undefined) {
+            jquery_url = retainful_cart_data.jquery_url;
+        }
+        getScript(jquery_url, function () {
+            if (typeof jQuery == "undefined") {
+                console.log("retainful unable to include jQuery");
+            } else {
+                jQuery.noConflict();
+                initRtlShopify && initRtlShopify()
+            }
+        });
+    } else {
+        initRtlShopify && initRtlShopify()
+    }
+}
+
+
+
+if (document.readyState !== 'loading') {
+    loadRTL()
+} else {
+    document.addEventListener('DOMContentLoaded', function () {
+        loadRTL()
+    });
 }
