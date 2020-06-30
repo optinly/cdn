@@ -1300,6 +1300,7 @@ document.addEventListener("DOMContentLoaded", function () {
             jquery_url = retainful_cart_data.jquery_url;
         }
         getScript(jquery_url, function () {
+            console.log(jQuery, initRtlShopify)
             if (typeof jQuery == "undefined") {
                 console.log("retainful unable to include jQuery");
             } else {
