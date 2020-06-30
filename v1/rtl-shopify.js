@@ -1,5 +1,5 @@
 
-console.log("ch 1")
+console.log("ch a1")
 function WebUiPopover(window, document, undefined) {
 
     !(function (t) {
@@ -1779,8 +1779,10 @@ function initRtlShopify() {
 
 
     /** Initializing utils */
+    console.log("ch 01")
     WebUiPopover(window, document)
+    console.log("ch aa1")
     UUID()
-
+    console.log("ch a2")
     let rtl = new Retainful(rtlStorefrontParams) //customization: null customization is. 
 }
