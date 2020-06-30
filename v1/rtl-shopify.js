@@ -1,5 +1,5 @@
 
-
+console.log("ch 1")
 function WebUiPopover(window, document, undefined) {
 
     !(function (t) {
@@ -1568,7 +1568,7 @@ function initRtlShopify() {
             this.add_to_cart_selectors = '#AddToCart, #AddToCart-product-template, #AddToCart--product-template, .AddToCartText, .add_to_cart, .add-to-cart, #add-to-cart, form[action^="/cart/add"] button[type="submit"]'
             this.params.capture_email_on_add_to_cart && this.initAddToCart()
             this.cart_data = null
-
+            console.log("ch 2")
             Retainful.API.params = params
             Retainful.helpers = new Helpers(params)
             Retainful.CustomerSession = new CustomerSession(params)
