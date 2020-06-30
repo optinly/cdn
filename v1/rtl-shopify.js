@@ -1,4 +1,3 @@
-console.log("load 1")
 
 function WebUiPopover(window, document, undefined) {
 
@@ -1690,7 +1689,6 @@ function initRtlShopify() {
                                 r.hide();
                                 i.show().addClass("jilt-email-success").attr("src", Retainful.helpers.popoverCheckmarkSrc);
                                 setTimeout(function () {
-                                    console.log("2nd callback")
                                     t.webuiPopover("hide")
                                     Retainful.setCustomerEmail(o, Retainful.API.CONTACT_SOURCE_POPOVER)
                                     Retainful.terminateAddToCart()
@@ -1749,7 +1747,6 @@ function initRtlShopify() {
 
 
 function loadRTL() {
-    console.log("load RTL")
     if (typeof jQuery == "undefined") {
         // alert("jquery undefined");
 
