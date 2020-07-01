@@ -1707,8 +1707,14 @@ function initRtlShopify() {
         }
 
 
-        static handleEmailBypass() {
-            console.log('handleEmailBypass')
+        static handleEmailBypass(t, e) {
+
+            var o = arguments.length <= 2 || arguments[2] === undefined ? function () { } : arguments[2];
+            if (null != t) t.preventDefault();
+            "function" == typeof e.webuiPopover && e.webuiPopover("destroy");
+            this.terminateAddToCart();
+            this.setCustomerEmail("false");
+            o();
         }
 
         static terminateAddToCart() {
