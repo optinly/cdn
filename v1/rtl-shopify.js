@@ -1797,6 +1797,7 @@ if (document.readyState !== 'loading') {
     loadRTL()
 } else {
     document.addEventListener('DOMContentLoaded', function () {
+        console.log("Loaded 1")
         loadRTL()
     });
 }
