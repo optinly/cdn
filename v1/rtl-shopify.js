@@ -1505,9 +1505,10 @@ function initRtlShopify() {
 
         updateCustomerSession(t) {
             var e,
-                o = arguments.length <= 1 || arguments[1] === undefined ? function () { } : arguments[1];
-            e = Retainful.API.generateURL("customer");
-            Retainful.API.request({ method: "PUT", endpoint: e, data: t }, o, o);
+                e = Retainful.API.generateURL("customer");
+            Retainful.API.request({ method: "PUT", endpoint: e, data: t }, function (res) {
+
+            });
         }
         _generateUUID(t) {
             if (window.rtl_uuid) {
@@ -1531,6 +1532,8 @@ function initRtlShopify() {
             Retainful.API.params = params
             Retainful.helpers = new Helpers(params)
             Retainful.CustomerSession = new CustomerSession(params)
+
+            this.checkCartData(this.updateCartData);
         }
 
         static helpers
@@ -1544,7 +1547,7 @@ function initRtlShopify() {
             CONTACT_SOURCE_CHECKOUT: 'rtljs_checkout',
             request: function (t, e) {
                 var i, n, r, a, s, l, u, c, d, p, h;
-                let { x_jilt_shop_domain, shop_uuid, session_id } = this.params
+                let { x_rtl_shop_domain, shop_uuid, session_id } = this.params
 
                 return (
                     (l = t.method),
@@ -1555,11 +1558,12 @@ function initRtlShopify() {
                     (i = null == (d = t.async) || d),
                     (h = null != (p = t.timeout) ? p : 0),
                     "application/json" === n && (r = JSON.stringify(r)),
-                    Retainful.$.ajax({ method: l, type: l, url: s, headers: { "x-rtl-shop-domain": x_jilt_shop_domain, "rtl-session_id": session_id, shop_id: shop_uuid, }, data: r, contentType: n, dataType: a, async: i, timeout: h })
+                    Retainful.$.ajax({ method: l, type: l, url: s, headers: { "x-rtl-shop-domain": x_rtl_shop_domain, "rtl-session_id": session_id, shop_id: shop_uuid, }, data: r, contentType: n, dataType: a, async: i, timeout: h })
                         .done(function (t) {
                             if ("function" == typeof e) return e(t || true);
                         })
                         .fail(function (t) {
+                            console.log("function", e)
                             if ("function" == typeof e) return e(false);
                         })
                 );
@@ -1609,23 +1613,39 @@ function initRtlShopify() {
             }
         }
 
-        async checkCartData() {
+        checkCartData(t) {
+            var e = this,
+                o = arguments.length <= 1 || arguments[1] === undefined || arguments[1];
 
-            return new Promise((resolve, reject) => {
-                jQuery.ajax({
-                    type: "GET",
-                    url: '/cart.js',
-                    dataType: 'json'
-                })
-                    .done(function (data) {
-                        this.cart_data = data
-                        return resolve(data)
-                    })
-                    .fail(function (xhr, status, error) {
-                        console.log(error)
-                        reject(error)
-                    });
+            jQuery.ajax({
+                type: "GET",
+                url: '/cart.js',
+                dataType: 'json'
             })
+                .done(function (i) {
+                    this.cart_data = i
+                    var n;
+                    console.log("checkCartData", t)
+                    if (n = e.normalizeShopifyCartData(i), (e.params.localCart = n), null != t && "function" == typeof t && t(n), o) return e.regenerateCart();
+                })
+                .fail(function (xhr, status, error) {
+                    console.log(error)
+                });
+        }
+
+        updateCartData(t) {
+            var e,
+                o,
+                i,
+                n = arguments.length <= 1 || arguments[1] === undefined ? function () { } : arguments[1];
+
+            return t.item_count > 0
+                ? ((e = { cart: t }),
+                    (i = localStorage.getItem("rtl_customer_email")) && ((e.customer = { email: i }), (o = localStorage.getItem("rtl_customer_contact_source")) && (e.customer.contact_source = o)),
+                    Retainful.CustomerSession.updateCustomerSession(e, n))
+                : null != n && "function" == typeof n
+                    ? n()
+                    : void 0;
         }
 
 
@@ -1739,6 +1759,33 @@ function initRtlShopify() {
             return t.shop_id = this.params.shop_uuid, t.updated_at = new Date, t.cart_token = t.token, delete t.token, t.line_items = t.items, delete t.items, t
         }
 
+        regenerateCart() {
+            var t,
+                e,
+                o,
+                i,
+                n = this;
+            console.log("regenerateCart", "" !== (e = Retainful.helpers.getWindowLocationSearch().substring(1)))
+
+            if ("" !== (e = Retainful.helpers.getWindowLocationSearch().substring(1)))
+                return null != (t = Retainful.helpers.parseQueryParams(e)).rtl_cart_token
+                    ? (this.params.localCart.item_count > 0 && this.clearCart(),
+                        (i = Retainful.API.generateURL("orders", t.rtl_cart_token)),
+                        (o = function (t) {
+                            var o, i;
+                            console.log("reg ", t)
+                            return (i = JSON.parse(t)).checkout_url
+                                ? Retainful.helpers.redirect(i.checkout_url + "?" + e)
+                                : (o = n.generateOrderData(JSON.parse(t)))
+                                    ? (n.addRegeneratingNotice(),
+                                        n.addToCart(o, function () {
+                                            return n.updateCartAndRedirect("/checkout?" + e);
+                                        }))
+                                    : void 0;
+                        }),
+                        Retainful.API.request({ method: "GET", endpoint: i }, o))
+                    : void 0;
+        }
     }
 
 
@@ -1749,12 +1796,8 @@ function initRtlShopify() {
     let rtl = new Retainful(rtlStorefrontParams) //customization: null customization is. 
 }
 
-
-
-
 function loadRTL() {
     if (typeof jQuery == "undefined") {
-        // alert("jquery undefined");
 
         function getScript(url, success) {
             let script = document.createElement('script');
@@ -1791,13 +1834,10 @@ function loadRTL() {
     }
 }
 
-
-
 if (document.readyState !== 'loading') {
     loadRTL()
 } else {
     document.addEventListener('DOMContentLoaded', function () {
-        console.log("Loaded 1")
         loadRTL()
     });
 }
