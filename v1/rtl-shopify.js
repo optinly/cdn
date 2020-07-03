@@ -1473,14 +1473,20 @@ function initRtlShopify() {
         }
 
         identifyCustomer() {
-            var t, e, o;
+            var t, e, o, v;
 
             if (null != window.rtlStorefrontParams.customerID) t = { customer: { customer_id: window.rtlStorefrontParams.customerID } };
             else {
                 if ("" === (o = Retainful.helpers.getWindowLocationSearch().substring(1))) return;
                 null != (e = Retainful.helpers.parseQueryParams(o)).utm_customer_id && (t = { customer: { rtl_id: e.utm_customer_id } });
             }
-            if (null != t) return this.updateCustomerSession(t);
+
+            if (null != t && !document.cookie.indexOf("rtl_customer")) return this.updateCustomerSession(t, (res) => {
+                if (res) {
+                    (v = new Date()).setTime(v.getTime() + 7884e8)
+                    document.cookie = "rtl_customer=" + true + ";path=/;max-age=788940000;expires=" + v
+                }
+            });
         }
 
         _generateNewCustomerSessionData(t) {
@@ -1503,12 +1509,10 @@ function initRtlShopify() {
             });
         }
 
-        updateCustomerSession(t) {
+        updateCustomerSession(t, f) {
             var e,
                 e = Retainful.API.generateURL("customer");
-            Retainful.API.request({ method: "PUT", endpoint: e, data: t }, function (res) {
-
-            });
+            Retainful.API.request({ method: "PUT", endpoint: e, data: t }, f);
         }
         _generateUUID(t) {
             if (window.rtl_uuid) {
@@ -1563,7 +1567,6 @@ function initRtlShopify() {
                             if ("function" == typeof e) return e(t || true);
                         })
                         .fail(function (t) {
-                            console.log("function", e)
                             if ("function" == typeof e) return e(false);
                         })
                 );
@@ -1591,13 +1594,12 @@ function initRtlShopify() {
 
 
         initAddToCart() {
-            const checkCartData = this.checkCartData
             var t = this;
 
             if (
                 Retainful.$(document.body).on("click.jilt_check_cart", this.add_to_cart_selectors, function () {
                     return setTimeout(function () {
-                        return t.checkCartData(Retainful.updateCartData, !1);
+                        return t.checkCartData(t.updateCartData, !1);
                     }, 1e3);
                 })
                 &&
@@ -1625,7 +1627,6 @@ function initRtlShopify() {
                 .done(function (i) {
                     this.cart_data = i
                     var n;
-                    console.log("checkCartData", t)
                     if (n = e.normalizeShopifyCartData(i), (e.params.localCart = n), null != t && "function" == typeof t && t(n), o) return e.regenerateCart();
                 })
                 .fail(function (xhr, status, error) {
